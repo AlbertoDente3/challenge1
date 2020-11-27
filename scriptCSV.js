@@ -1,16 +1,11 @@
 var fs = require('fs')
 
-
-
-
-
 var parametriPassati = process.argv.slice(2)
 
 var percorsoFile = parametriPassati[0]
 var indiceColonnaDaCercare = parametriPassati[1]
 var valoreDaCercare = parametriPassati[2]
 var arrayJsonPersone = []
-
 
 /* leggo */
 var documento = fs.readFileSync('./data/names2', 'utf8')
@@ -53,14 +48,13 @@ function cerca(indice, valore) {
             /* Se la colonna e uguale alla colonna che sto cercando prosegue nel controlllo */
             /* TODO volendo si potrebbe ottimizzare con una ricerca dicotomica */
             if (j === parseInt(indice)) {
-                
-                datoConfronto = el[Object.keys(el)[j]]
+                /* Per  leggibilita del codice creo una variabile*/
+                let datoConfronto = el[Object.keys(el)[j]]
 
+                /* Faccio l'effettiva uguaglianza */
                 if (datoConfronto === valore) daRitornare.push(arrayJsonPersone[i])
             }
         }
-
-        console.log()
     }
 
     return daRitornare
