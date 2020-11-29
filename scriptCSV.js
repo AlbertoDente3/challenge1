@@ -8,7 +8,7 @@ var valoreDaCercare = parametriPassati[2]
 var arrayJsonPersone = []
 
 /* leggo */
-var documento = fs.readFileSync('./data/names2', 'utf8')
+var documento = fs.readFileSync(percorsoFile, 'utf8')
 
 /* Estraggo le righe */
 let arrayRecord = documento.split(';')
@@ -31,7 +31,10 @@ arrayRecord.forEach((dato) => {
 })
 
 /* Richiamo la funzione di ricerca */
-console.log(cerca(indiceColonnaDaCercare, valoreDaCercare))
+let rs = cerca(indiceColonnaDaCercare, valoreDaCercare)
+
+/* Output */
+console.log(formattaPerOutput(rs))
 
 /* Funzioni */
 function cerca(indice, valore) {
@@ -58,6 +61,28 @@ function cerca(indice, valore) {
     }
 
     return daRitornare
+}
+
+function formattaPerOutput(json) {
+    let testoFormattato = ''
+
+    for (let i = 0; i < json.length; i++) {
+        const el = json[i]
+
+        let nColonne = Object.keys(el).length
+        /* Cerco nele colonne */
+        for (let j = 0; j < nColonne; j++) {
+            let isUltimo = false
+            let valoreCampo = el[Object.keys(el)[j]]
+
+            if (j === nColonne - 1) isUltimo = true
+            testoFormattato = testoFormattato + valoreCampo + (!isUltimo ? ' - ' : '')
+        }
+
+        testoFormattato = testoFormattato + '\n'
+    }
+
+    return testoFormattato
 }
 
 /* folder color #FFD580 */
